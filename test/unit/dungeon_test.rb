@@ -1,5 +1,7 @@
 require 'test/unit'
 require 'dm-mysql-adapter'
+
+require_relative '../../app/models/room'
 require_relative '../../app/models/dungeon'
 
 class DungeonTest < Test::Unit::TestCase
@@ -12,10 +14,84 @@ class DungeonTest < Test::Unit::TestCase
 
 
   def teardown
+    Room.all.destroy!
     Dungeon.all.destroy!
   end
 
   def test_constructor
-    dungeon = Dungeon.create!(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon')
+  end
+
+  def test_add_room
+    dungeon = Dungeon.create(:name => 'A Dungeon')
+    room = Room.create(:name => 'Some Room')
+    dungeon.add_room(room)
+    assert_true(dungeon.has_room(room.name))
+  end
+
+  def test_connect_rooms
+    dungeon = Dungeon.create(:name => 'A Dungeon')
+    room1 = Room.create(:name => 'Room1')
+    room2 = Room.create(:name => 'Room2')
+
+    dungeon.add_room(room1)
+    dungeon.add_room(room2)
+
+    assert_true(dungeon.has_room(room1.name))
+    assert_true(dungeon.has_room(room2.name))
+
+    dungeon.connect_rooms(room1, room2, Direction::EAST)
+    assert_true(dungeon.has_connection(room1, room2))
+  end
+
+  def test_unconnected_rooms
+    dungeon = Dungeon.create(:name => 'A Dungeon')
+    room1 = Room.create(:name => 'Room1')
+    room2 = Room.create(:name => 'Room2')
+
+    dungeon.add_room(room1)
+    dungeon.add_room(room2)
+
+    assert_false(dungeon.has_connection(room1, room2))
+  end
+
+  def test_remove_room
+    dungeon = Dungeon.create(:name => 'A Dungeon')
+    room1 = Room.create(:name => 'Room1')
+
+    dungeon.add_room(room1)
+    dungeon.remove_room(room1.name)
+
+    assert_false(dungeon.has_room(room1.name))
+  end
+
+  def test_remove_connected_room1
+    dungeon = Dungeon.create(:name => 'A Dungeon')
+    room1 = Room.create(:name => 'Room1')
+    room2 = Room.create(:name => 'Room2')
+
+    dungeon.add_room(room1)
+    dungeon.add_room(room2)
+    dungeon.connect_rooms(room1, room2, Direction::UP)
+    dungeon.remove_room(room1.name)
+
+    assert_false(dungeon.has_room(room1.name))
+    assert_true(dungeon.has_room(room2.name))
+    assert_false(dungeon.has_connection(room1, room2))
+  end
+
+  def test_remove_connected_room2
+    dungeon = Dungeon.create(:name => 'A Dungeon')
+    room1 = Room.create(:name => 'Room1')
+    room2 = Room.create(:name => 'Room2')
+
+    dungeon.add_room(room1)
+    dungeon.add_room(room2)
+    dungeon.connect_rooms(room1, room2, Direction::SOUTH_EAST)
+    dungeon.remove_room(room2.name)
+
+    assert_false(dungeon.has_room(room2.name))
+    assert_true(dungeon.has_room(room1.name))
+    assert_false(dungeon.has_connection(room1, room2))
   end
 end
