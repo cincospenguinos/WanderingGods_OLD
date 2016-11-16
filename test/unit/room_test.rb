@@ -5,18 +5,12 @@ require_relative '../../app/models/item'
 
 class RoomTest < Test::Unit::TestCase
 
-  # Called before every test method runs. Can be used
-  # to set up fixture information.
   def setup
-    # DataMapper::Logger.new($stdout, :debug)
-    DataMapper::Model.raise_on_save_failure = true
     DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods')
+    DataMapper::Model.raise_on_save_failure = true
     DataMapper.finalize
     DataMapper.auto_migrate!
   end
-
-  # Called after every test method runs. Can be used to tear
-  # down fixture information.
 
   def teardown
     ItemAlias.all.destroy!

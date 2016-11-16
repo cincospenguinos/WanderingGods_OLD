@@ -8,6 +8,7 @@ class DungeonTest < Test::Unit::TestCase
 
   def setup
     DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods')
+    DataMapper::Model.raise_on_save_failure = true
     DataMapper.finalize
     DataMapper.auto_migrate!
   end

@@ -8,14 +8,10 @@ class Dungeon
 
   property :id, Serial
   property :name, String, :required => true
-  property :connections, Object
+  property :connections, Json, :default => {}
 
   # Rooms are connected via the connections object (a hash) by name. So no dungeon can have two rooms with the same name
   has n, :rooms
-
-  after :create do
-    self.update(:connections => {})
-  end
 
   def add_room(room)
     room.update(:dungeon => self)
