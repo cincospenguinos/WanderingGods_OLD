@@ -14,12 +14,16 @@ class Room
   end
 
   def has_item(item_name)
-    # TODO: Figure out downcase/upcase situation, and look at aliases
-    false if Item.first(:name => item_name,  :room => self) == nil
-    true
+    return true if Item.first(:name => item_name, :room => self)
+    Item.all(:room => self).each do |i|
+      return true if i.has_alias(item_name)
+    end
+    false
   end
 
   def take_item(item_name)
-    # TODO: This
+    item = Item.first(:name => item_name, :room => self)
+    item.update(:room => nil) if item
+    item
   end
 end

@@ -34,4 +34,13 @@ class RoomTest < Test::Unit::TestCase
     room.add_item(item)
     assert(room.has_item(item.name))
   end
+
+  def test_remove_item
+    room = Room.create(:name => 'Room')
+    item = Item.create(:name => 'item', :description => 'herp')
+    room.add_item(item)
+    assert_true(room.has_item(item.name))
+    room.take_item(item.name)
+    assert_false(room.has_item(item.name), 'The room should no longer have the item in it')
+  end
 end
