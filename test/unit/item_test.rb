@@ -30,11 +30,24 @@ class ItemTest < Test::Unit::TestCase
     assert(item.has_alias('something'))
   end
 
+  def test_name_as_alias
+    item = Item.create(:name => 'ItEm', :description => 'herp')
+    assert(item.has_alias('item'))
+  end
+
   def test_remove_alias
     item = Item.create(:name => 'Item', :description => 'Some description')
     item.add_alias('something')
     assert(item.has_alias('something'))
     item.remove_alias('something')
-    assert(!item.has_alias('something'))
+    assert_false(item.has_alias('something'))
+  end
+
+  def test_remove_name_as_alias
+    # The name as an alias should not be removed
+    item = Item.create(:name => 'Item', :description => 'herp')
+    assert(item.has_alias('item'))
+    item.remove_alias('item')
+    assert(item.has_alias('item'))
   end
 end

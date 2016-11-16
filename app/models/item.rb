@@ -14,16 +14,20 @@ class Item
   belongs_to :room, :required => false
   # belongs_to :player, :required => false
 
+  after :create do |item|
+    item.add_alias(item.name)
+  end
+
   def add_alias(some_alias)
-    ItemAlias.first_or_create(:alias => some_alias, :item => self)
+    ItemAlias.first_or_create(:alias => some_alias.downcase, :item => self)
   end
 
   def has_alias(some_alias)
-    ItemAlias.first(:alias => some_alias, :item => self) != nil
+    ItemAlias.first(:alias => some_alias.downcase, :item => self) != nil
   end
 
   def remove_alias(some_alias)
-    some_alias = ItemAlias.first(:alias => some_alias, :item => self)
-    some_alias.destroy if some_alias
+    some_alias = ItemAlias.first(:alias => some_alias.downcase, :item => self)
+    some_alias.destroy if some_alias && some_alias.alias != self.name.downcase
   end
 end
