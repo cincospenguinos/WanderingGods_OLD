@@ -18,6 +18,6 @@ class PlayerTest < Test::Unit::TestCase
   end
 
   def test_constructor
-    Player.create(:username => 'a', :str => 1, :con => 3, :dex => 10, :int => 6, :current_health => 1)
+    Player.create(:username => 'a', :str => 1, :con => 3, :dex => 10, :int => 6)
   end
 end

@@ -6,8 +6,11 @@ class Room
 
   property :id, Serial
   property :name, String, :required => true
+
   has n, :items
+
   belongs_to :dungeon, :required => false
+  belongs_to :player, :required => false
 
 
   def add_item(item)

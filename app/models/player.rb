@@ -20,16 +20,38 @@ class Player
   property :dex, Integer, :required => true
   property :int, Integer, :required => true
 
-  # TODO: Change this so that it gets fixed after create
-  property :current_health, Integer, :required => true
+  property :current_health, Integer
 
-  # has_n :items
-  # has 1, :dungeon
+  has n, :items
+  has 1, :dungeon
+  has 1, :room
 
-  after :create do
-
+  before :create do
+    self.current_health = max_health
   end
 
-  # TODO: Get all the other stats up
+  def physical_to_hit
+    self.dex
+  end
+
+  def physical_damage
+    (self.str / 2).to_i
+  end
+
+  def spell_to_hit
+    self.con
+  end
+
+  def spell_damage
+    (self.int / 2).to_i
+  end
+
+  def evasiveness
+    5 + (self.dex + 2 * self.int / 3).to_i
+  end
+
+  def max_health
+    ((self.str + self.con) / 2).to_i
+  end
 
 end

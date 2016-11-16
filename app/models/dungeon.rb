@@ -13,6 +13,8 @@ class Dungeon
   # Rooms are connected via the connections object (a hash) by name. So no dungeon can have two rooms with the same name
   has n, :rooms
 
+  belongs_to :player, :required => false
+
   def add_room(room)
     room.update(:dungeon => self)
     self.connections[room.name] = {}

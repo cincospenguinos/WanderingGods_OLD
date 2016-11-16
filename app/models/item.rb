@@ -12,7 +12,7 @@ class Item
   has n, :item_aliases
 
   belongs_to :room, :required => false
-  # belongs_to :player, :required => false
+  belongs_to :player, :required => false
 
   after :create do |item|
     item.add_alias(item.name)
