@@ -2,6 +2,7 @@
 #
 # Class representing a player
 require 'data_mapper'
+require_relative 'item'
 
 class Player
   include DataMapper::Resource
@@ -20,5 +21,7 @@ class Player
   property :int, Integer, :required => true
 
   property :current_health, Integer, :required => true
+
+  # has_n :items
 
 end

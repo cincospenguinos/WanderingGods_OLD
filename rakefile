@@ -1,0 +1,13 @@
+
+# Test task
+task :test => [:unit, :spec]
+
+task :unit do
+  Dir[File.dirname(File.absolute_path(__FILE__)) + '/**/*_test.rb'].each {|file| require file }
+end
+
+task :spec do
+  # TODO: Spec tests
+end
+
+task :default => [:test]
