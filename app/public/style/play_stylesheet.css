@@ -1,6 +1,6 @@
 * {
     color: white;
-    font-family: "Courier 10 Pitch", sans-serif;
+    font-family: Courier, sans-serif;
     background-color: black;
 }
 
@@ -8,6 +8,18 @@
     height: 90%;
     margin-bottom: 3%;
     overflow-y: auto;
+}
+
+.response_header {
+    overflow: auto;
+}
+
+.response_command {
+    float: left;
+}
+
+.response_room {
+    float: right;
 }
 
 #command_prompt {
