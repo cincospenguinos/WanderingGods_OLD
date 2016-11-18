@@ -25,15 +25,15 @@ class DungeonTest < Test::Unit::TestCase
 
   def test_add_room
     dungeon = Dungeon.create(:name => 'A Dungeon')
-    room = Room.create(:name => 'Some Room')
+    room = Room.create(:name => 'Some Room', :description => 'Some room.')
     dungeon.add_room(room)
     assert_true(dungeon.has_room(room.name))
   end
 
   def test_connect_rooms
     dungeon = Dungeon.create(:name => 'A Dungeon')
-    room1 = Room.create(:name => 'Room1')
-    room2 = Room.create(:name => 'Room2')
+    room1 = Room.create(:name => 'Room1', :description => 'Room 1')
+    room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 
     dungeon.add_room(room1)
     dungeon.add_room(room2)
@@ -47,8 +47,8 @@ class DungeonTest < Test::Unit::TestCase
 
   def test_unconnected_rooms
     dungeon = Dungeon.create(:name => 'A Dungeon')
-    room1 = Room.create(:name => 'Room1')
-    room2 = Room.create(:name => 'Room2')
+    room1 = Room.create(:name => 'Room1', :description => 'Room 1')
+    room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 
     dungeon.add_room(room1)
     dungeon.add_room(room2)
@@ -58,7 +58,7 @@ class DungeonTest < Test::Unit::TestCase
 
   def test_remove_room
     dungeon = Dungeon.create(:name => 'A Dungeon')
-    room1 = Room.create(:name => 'Room1')
+    room1 = Room.create(:name => 'Room1', :description => 'Room 1')
 
     dungeon.add_room(room1)
     dungeon.remove_room(room1.name)
@@ -68,8 +68,8 @@ class DungeonTest < Test::Unit::TestCase
 
   def test_remove_connected_room1
     dungeon = Dungeon.create(:name => 'A Dungeon')
-    room1 = Room.create(:name => 'Room1')
-    room2 = Room.create(:name => 'Room2')
+    room1 = Room.create(:name => 'Room1', :description => 'Room 1')
+    room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 
     dungeon.add_room(room1)
     dungeon.add_room(room2)
@@ -83,8 +83,8 @@ class DungeonTest < Test::Unit::TestCase
 
   def test_remove_connected_room2
     dungeon = Dungeon.create(:name => 'A Dungeon')
-    room1 = Room.create(:name => 'Room1')
-    room2 = Room.create(:name => 'Room2')
+    room1 = Room.create(:name => 'Room1', :description => 'Room 1')
+    room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 
     dungeon.add_room(room1)
     dungeon.add_room(room2)

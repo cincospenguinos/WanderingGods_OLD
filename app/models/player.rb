@@ -30,6 +30,19 @@ class Player
     self.current_health = max_health
   end
 
+  ## GAME COMMANDS
+
+  def enter_dungeon(dungeon)
+    room = dungeon.get_first_room
+    update(:room => room, :dungeon => dungeon)
+  end
+
+  def look
+    self.room.description
+  end
+
+  ## STATS
+
   def physical_to_hit
     self.dex
   end
@@ -52,6 +65,16 @@ class Player
 
   def max_health
     ((self.str + self.con) / 2).to_i
+  end
+
+  ## GETTERS/SETTERS
+
+  def get_current_room
+    Room.first(:player => self)
+  end
+
+  def get_current_dungeon
+    Dungeon.first(:player => self)
   end
 
 end

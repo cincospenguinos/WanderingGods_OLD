@@ -19,18 +19,18 @@ class RoomTest < Test::Unit::TestCase
   end
 
   def test_constructor
-    room = Room.create(:name => 'Some Room')
+    room = Room.create(:name => 'Some Room', :description => 'A single room.')
   end
 
   def test_add_item
-    room = Room.create!(:name => 'Some Room')
+    room = Room.create!(:name => 'Some Room', :description => 'Some room.')
     item = Item.create!(:name => 'Item', :description => 'An item')
     room.add_item(item)
     assert(room.has_item(item.name))
   end
 
   def test_remove_item
-    room = Room.create(:name => 'Room')
+    room = Room.create(:name => 'Room', :description => 'Some room')
     item = Item.create(:name => 'item', :description => 'herp')
     room.add_item(item)
     assert_true(room.has_item(item.name))

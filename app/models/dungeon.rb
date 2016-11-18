@@ -9,6 +9,7 @@ class Dungeon
   property :id, Serial
   property :name, String, :required => true
   property :connections, Json, :default => {}
+  property :first_room, String
 
   # Rooms are connected via the connections object (a hash) by name. So no dungeon can have two rooms with the same name
   has n, :rooms
@@ -34,6 +35,16 @@ class Dungeon
 
       self.connections[room.name] = nil
     end
+  end
+
+  def get_first_room
+    raise RuntimeError, 'There is no first room for this dungeon' unless self.first_room
+    Room.first(:name => self.first_room, :dungeon => self)
+  end
+
+  def set_first_room(room)
+    self.update(:first_room => room.name)
+    add_room(room) unless has_room(room.name)
   end
 
   def connect_rooms(origin, destination, direction)

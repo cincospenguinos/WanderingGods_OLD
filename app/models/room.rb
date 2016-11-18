@@ -6,6 +6,7 @@ class Room
 
   property :id, Serial
   property :name, String, :required => true
+  property :description, String, :required => true
 
   has n, :items
 
