@@ -20,11 +20,7 @@ class PlayApp < Sinatra::Base
 
     def generate_random_player
       player = Player.create(:username => 'guest', :str => 5, :con => 5, :dex => 5, :int => 5)
-
-      # TODO: Pull dungeon up from database
-      dungeon = Dungeon.create(:name => 'Eden', :author => 'יהוה')
-      room = Room.create(:name => 'House', :description => 'You are standing in front of a white house.')
-      dungeon.set_first_room(room)
+      dungeon = Dungeon.first(:id => 2) # TODO: Better way of grabbing this?
       player.enter_dungeon(dungeon)
 
       player.id
