@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'data_mapper'
 require 'json'
 
+require_relative 'models/direction'
 require_relative 'models/item_alias'
 require_relative 'models/item'
 require_relative 'models/monster'
@@ -58,10 +59,38 @@ class PlayApp < Sinatra::Base
     end
   end
 
+  post '/go' do
+    if @params.size != 1
+      send_response(false, 'Where do you want to go?')
+    else
+      direction = @params['0']
+      resp = get_player.go(direction)
+
+      if resp
+        send_response(true, resp)
+      else
+        send_response(false, 'You can\'t go that direction.')
+      end
+    end
+  end
+
+  post '/exits' do
+    # TODO: This
+    send_response(false, 'This still needs to be done.')
+  end
+
   post '/help' do
-    # TODO: This, much more nicely
-    send_response(true, "<strong>look [object]</strong> - look at the room or an object<br/>
-<strong>help [command]</strong> - display this menu or see more information about a command<br/>")
+    if @params.size == 0
+      resp = '<strong>look [object]</strong> - look at the room or an object<br/>'\
+      '<strong>exits</strong> - displays the current exists you may take'\
+      '<strong>help [command]</strong> - display this menu or see more information about a command<br/>'
+
+      send_response(true, resp)
+    elsif @params.size == 1
+      send_response(true, 'This part coming soon... maybe...')
+    else
+      send_response(false, 'Usage: "help" or "help [command]"')
+    end
   end
 
   post '/*' do

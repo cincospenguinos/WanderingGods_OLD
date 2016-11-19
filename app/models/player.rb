@@ -49,6 +49,21 @@ class Player
     end
   end
 
+  def go(direction)
+    if Direction.is_direction?(direction)
+      room = self.dungeon.get_room_through_direction(get_current_room, direction)
+
+      if room
+        update(:room => room)
+        true
+      else
+        false
+      end
+    else
+      false
+    end
+  end
+
   ## STATS
 
   def physical_to_hit

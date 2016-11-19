@@ -15,7 +15,7 @@ module Direction
 
   def self.is_direction?(dir)
     if dir.is_a?(String)
-      # TODO: String checks
+      return %w(n ne e se s sw w nw u d north northeast east southeast south southwest west northwest up down).include?(dir.downcase)
     elsif dir.is_a?(Integer)
       return true if dir >= 0 && dir <= 9
     end

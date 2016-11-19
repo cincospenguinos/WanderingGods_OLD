@@ -23,9 +23,13 @@ task :setup do
 
   dungeon = Dungeon.first_or_create(:name => 'Eden', :author => 'יהוה')
   room1 = Room.first_or_create(:name => 'Garden', :description => 'You are standing in a beautiful garden.')
+  room2 = Room.first_or_create(:name => 'Other Garden', :description => 'You are standing in front of a large waterfall.')
   item = Item.first_or_create(:name => 'Thingy', :description => 'It\'s just a thingy.')
   room1.add_item(item)
   dungeon.set_first_room(room1)
+  dungeon.add_room(room2) # TODO: This line isn't working. Why?
+  dungeon.connect_rooms(room1, room2, Direction::EAST)
+  dungeon.connect_rooms(room2, room1, Direction::WEST)
 end
 
 task :default => [:test]

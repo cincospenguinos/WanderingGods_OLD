@@ -12,3 +12,5 @@ pulls up the tutorial dungeon and gives it to the new guest player
     one for dungeons that are stored away and separate? If there aren't two separate sets
     of tables, then player A will play dungeon B and player C will also play the identical
     instance of dungeon B. This is a big issue that will need to be addressed later on
+* The rake task "setup" has two rooms being thrown into the dungeon, but only one of the
+rooms is actually added.

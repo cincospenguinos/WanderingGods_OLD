@@ -1,6 +1,7 @@
 require 'test/unit'
 require 'dm-mysql-adapter'
 
+require_relative '../../app/models/player'
 require_relative '../../app/models/room'
 require_relative '../../app/models/dungeon'
 
