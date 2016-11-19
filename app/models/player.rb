@@ -38,7 +38,15 @@ class Player
   end
 
   def look
-    self.room.description
+    self.room.get_look_description
+  end
+
+  def look_at(item_name)
+    if self.room.has_item(item_name)
+      self.room.get_item(item_name).description
+    else
+      false
+    end
   end
 
   ## STATS

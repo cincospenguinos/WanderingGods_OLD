@@ -20,7 +20,7 @@ class PlayApp < Sinatra::Base
 
     def generate_random_player
       player = Player.create(:username => 'guest', :str => 5, :con => 5, :dex => 5, :int => 5)
-      dungeon = Dungeon.first(:id => 2) # TODO: Better way of grabbing this?
+      dungeon = Dungeon.first(:id => 1) # TODO: Better way of grabbing this?
       player.enter_dungeon(dungeon)
 
       player.id
@@ -41,7 +41,27 @@ class PlayApp < Sinatra::Base
   end
 
   post '/look' do
-    send_response(true, get_player.look)
+    if @params.size == 0
+      send_response(true, get_player.look)
+    elsif @params.size == 1
+      item_name = @params['0'].downcase
+      resp = get_player.look_at(item_name)
+
+      if resp
+        send_response(true, resp.sub("\n", "<br/>"))
+      else
+        send_response(false, "I don't see anything called \"#{item_name}\"")
+      end
+
+    else
+      send_response(false, 'Usage: "look" or "look [item]"')
+    end
+  end
+
+  post '/help' do
+    # TODO: This, much more nicely
+    send_response(true, "<strong>look [object]</strong> - look at the room or an object<br/>
+<strong>help [command]</strong> - display this menu or see more information about a command<br/>")
   end
 
   post '/*' do

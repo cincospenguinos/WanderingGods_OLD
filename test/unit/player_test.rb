@@ -44,7 +44,7 @@ class PlayerTest < Test::Unit::TestCase
     dungeon.set_first_room(room)
     player.enter_dungeon(dungeon)
 
-    look = player.look
+    look = player.look.sub("\n", '')
 
     assert_true(look == room.description)
   end

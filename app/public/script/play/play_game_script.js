@@ -11,6 +11,8 @@
  * @param onSuccess
  */
 function submitPlayCommand(command, commandData, onSuccess){
+    console.log('/' + command);
+
     $.ajax({
         type: 'POST',
         url: '/' + command,
@@ -54,9 +56,14 @@ $(document).ready(function(){
         // Enter Key
         if(event.which === 13) {
             var command = commandNode.val();
+            var splitCommand = command.split(' ');
             commandNode.val('');
 
-            submitPlayCommand(command, {}, function(response){
+            var data = {};
+            for(var i = 1; i < command.length; i++)
+                data[i - 1] = splitCommand[i];
+
+            submitPlayCommand(splitCommand[0], data, function(response){
                 appendResponse(command, JSON.parse(response));
             })
         }

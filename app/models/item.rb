@@ -9,7 +9,7 @@ class Item
   property :name, String, :required => true
   property :description, Text, :required => true
 
-  has n, :item_aliases
+  has n, :item_aliases # TODO: Convert these into simple JSON elements
 
   belongs_to :room, :required => false
   belongs_to :player, :required => false

@@ -14,7 +14,7 @@ class Dungeon
   property :first_room, String # TODO: Convert this into an ID instead, as there may be multiple rooms with the same name
 
   # TODO: Dungeons with rooms with the same name?
-  has n, :rooms
+  has n, :rooms # TODO: Maybe just JSON property instead?
 
   belongs_to :player, :required => false
 

@@ -37,4 +37,12 @@ class RoomTest < Test::Unit::TestCase
     room.take_item(item.name)
     assert_false(room.has_item(item.name), 'The room should no longer have the item in it')
   end
+
+  def test_description_with_item
+    room = Room.create!(:name => 'Some Room', :description => 'Some room.')
+    item = Item.create!(:name => 'Item', :description => 'An item')
+    room.add_item(item)
+
+    assert_true(room.get_look_description.include?('There is'))
+  end
 end
