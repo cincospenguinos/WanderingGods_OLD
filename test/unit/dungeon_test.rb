@@ -7,7 +7,7 @@ require_relative '../../app/models/dungeon'
 class DungeonTest < Test::Unit::TestCase
 
   def setup
-    DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods')
+    DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods_dev')
     DataMapper::Model.raise_on_save_failure = true
     DataMapper.finalize
     DataMapper.auto_migrate!

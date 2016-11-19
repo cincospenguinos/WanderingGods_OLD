@@ -25,7 +25,7 @@ function submitPlayCommand(command, commandData, onSuccess){
 var commandNumber = 1;
 
 function appendResponse(command, serverResponse){
-    var response = $('<div/>', {id:"response" + commandNumber, "class":"response"});
+    var response = $('<div/>', {id:"response-" + commandNumber, "class":"response"});
     var header = $('<div/>', {"class":"response_header"})
     var responseCommand = $('<div/>', {"class":"response_command"});
     var responseRoom = $('<div/>', {"class":"response_room", content: serverResponse.room});
@@ -56,15 +56,17 @@ $(document).ready(function(){
             var command = commandNode.val();
             commandNode.val('');
 
-            // TODO: Data?
             submitPlayCommand(command, {}, function(response){
                 appendResponse(command, JSON.parse(response));
-                console.log(response);
             })
         }
     });
 
+    // Always focus on the command space
     $(document).click(function(){
         $('#player_command').select();
     });
+
+    // Send a look command when we're all done
+    submitPlayCommand('look', {}, function(response){appendResponse('look', JSON.parse(response))})
 });

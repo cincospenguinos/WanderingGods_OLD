@@ -9,7 +9,7 @@ class PlayerTest < Test::Unit::TestCase
 
   def setup
     DataMapper::Model.raise_on_save_failure = true
-    DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods')
+    DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods_dev')
     DataMapper.finalize
     DataMapper.auto_migrate!
 
