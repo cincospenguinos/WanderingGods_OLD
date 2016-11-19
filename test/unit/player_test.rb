@@ -12,8 +12,6 @@ class PlayerTest < Test::Unit::TestCase
     DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods_dev')
     DataMapper.finalize
     DataMapper.auto_migrate!
-
-    @dungeon = Dungeon.create(:name => 'Some Dungeon')
   end
 
   def teardown
@@ -29,7 +27,7 @@ class PlayerTest < Test::Unit::TestCase
   def test_enter_dungeon
     player = Player.create(:username => 'a', :str => 1, :con => 3, :dex => 10, :int => 6)
     room = Room.create(:name => 'Some room', :description => 'A room')
-    dungeon = Dungeon.create(:name => 'Some Dungeon')
+    dungeon = Dungeon.create(:name => 'Some Dungeon', :author => 'Me')
     dungeon.set_first_room(room)
     player.enter_dungeon(dungeon)
 
@@ -42,7 +40,7 @@ class PlayerTest < Test::Unit::TestCase
   def test_look
     player = Player.create(:username => 'a', :str => 1, :con => 3, :dex => 10, :int => 6)
     room = Room.create(:name => 'Some room', :description => 'A room')
-    dungeon = Dungeon.create(:name => 'Some Dungeon')
+    dungeon = Dungeon.create(:name => 'Some Dungeon', :author => 'Me')
     dungeon.set_first_room(room)
     player.enter_dungeon(dungeon)
 

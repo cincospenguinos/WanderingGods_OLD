@@ -34,6 +34,7 @@ class Player
 
   def enter_dungeon(dungeon)
     room = dungeon.get_first_room
+    raise RuntimeError, 'Cannot get first room' unless room
     update(:room => room, :dungeon => dungeon)
   end
 

@@ -8,10 +8,12 @@ class Dungeon
 
   property :id, Serial
   property :name, String, :required => true
-  property :connections, Json, :default => {}
-  property :first_room, String
+  property :author, String, :required => true
 
-  # Rooms are connected via the connections object (a hash) by name. So no dungeon can have two rooms with the same name
+  property :connections, Json, :default => {}
+  property :first_room, String # TODO: Convert this into an ID instead, as there may be multiple rooms with the same name
+
+  # TODO: Dungeons with rooms with the same name?
   has n, :rooms
 
   belongs_to :player, :required => false
@@ -43,7 +45,7 @@ class Dungeon
   end
 
   def set_first_room(room)
-    self.update(:first_room => room.name)
+    update(:first_room => room.name)
     add_room(room) unless has_room(room.name)
   end
 

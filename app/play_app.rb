@@ -21,8 +21,8 @@ class PlayApp < Sinatra::Base
     def generate_random_player
       player = Player.create(:username => 'guest', :str => 5, :con => 5, :dex => 5, :int => 5)
 
-      # TODO: Better way to put together the tutorial dungeon? Perhaps just pulling it up from the DB?
-      dungeon = Dungeon.create(:name => 'Eden')
+      # TODO: Pull dungeon up from database
+      dungeon = Dungeon.create(:name => 'Eden', :author => 'יהוה')
       room = Room.create(:name => 'House', :description => 'You are standing in front of a white house.')
       dungeon.set_first_room(room)
       player.enter_dungeon(dungeon)

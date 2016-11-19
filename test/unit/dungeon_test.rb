@@ -20,18 +20,18 @@ class DungeonTest < Test::Unit::TestCase
   end
 
   def test_constructor
-    dungeon = Dungeon.create(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
   end
 
   def test_add_room
-    dungeon = Dungeon.create(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room = Room.create(:name => 'Some Room', :description => 'Some room.')
     dungeon.add_room(room)
     assert_true(dungeon.has_room(room.name))
   end
 
   def test_connect_rooms
-    dungeon = Dungeon.create(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room1 = Room.create(:name => 'Room1', :description => 'Room 1')
     room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 
@@ -46,7 +46,7 @@ class DungeonTest < Test::Unit::TestCase
   end
 
   def test_unconnected_rooms
-    dungeon = Dungeon.create(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room1 = Room.create(:name => 'Room1', :description => 'Room 1')
     room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 
@@ -57,7 +57,7 @@ class DungeonTest < Test::Unit::TestCase
   end
 
   def test_remove_room
-    dungeon = Dungeon.create(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room1 = Room.create(:name => 'Room1', :description => 'Room 1')
 
     dungeon.add_room(room1)
@@ -67,7 +67,7 @@ class DungeonTest < Test::Unit::TestCase
   end
 
   def test_remove_connected_room1
-    dungeon = Dungeon.create(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room1 = Room.create(:name => 'Room1', :description => 'Room 1')
     room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 
@@ -82,7 +82,7 @@ class DungeonTest < Test::Unit::TestCase
   end
 
   def test_remove_connected_room2
-    dungeon = Dungeon.create(:name => 'A Dungeon')
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room1 = Room.create(:name => 'Room1', :description => 'Room 1')
     room2 = Room.create(:name => 'Room2', :description => 'Room 2')
 

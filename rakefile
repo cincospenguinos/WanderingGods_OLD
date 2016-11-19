@@ -10,4 +10,20 @@ task :spec do
   # TODO: Spec tests
 end
 
+task :setup do
+  require 'data_mapper'
+  require_relative 'app/models/player'
+  require_relative 'app/models/item'
+  require_relative 'app/models/room'
+  require_relative 'app/models/dungeon'
+
+  DataMapper.setup(:default, 'mysql://gods:some_pass@localhost/WanderingGods')
+  DataMapper.finalize
+  DataMapper.auto_migrate!
+
+  dungeon = Dungeon.first_or_create(:name => 'Eden', :author => 'יהוה')
+  room1 = Room.first_or_create(:name => 'Garden', :description => 'You are standing in a beautiful garden.')
+  dungeon.set_first_room(room1)
+end
+
 task :default => [:test]
