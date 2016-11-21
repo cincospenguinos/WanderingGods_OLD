@@ -46,6 +46,18 @@ class DungeonTest < Test::Unit::TestCase
     assert_true(dungeon.has_connection(room1, room2))
   end
 
+  def test_connect_rooms_first_room
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
+    room1 = Room.create(:name => 'Room1', :description => 'Room 1')
+    room2 = Room.create(:name => 'Room2', :description => 'Room 2')
+
+    dungeon.set_first_room(room1)
+    dungeon.add_room(room2)
+    dungeon.connect_rooms(room1, room2, Direction::WEST)
+
+    assert_true(dungeon.has_connection(room1, room2))
+  end
+
   def test_unconnected_rooms
     dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room1 = Room.create(:name => 'Room1', :description => 'Room 1')

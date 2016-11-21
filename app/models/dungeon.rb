@@ -45,6 +45,7 @@ class Dungeon
   end
 
   def set_first_room(room)
+    save if dirty?
     update(:first_room => room.name)
     add_room(room) unless has_room(room.name)
   end
@@ -54,6 +55,7 @@ class Dungeon
     return unless Direction.is_direction?(direction)
 
     self.connections[origin.name][direction] = destination.name
+    save
   end
 
   def has_exit_in_direction(room, direction)

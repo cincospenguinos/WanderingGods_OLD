@@ -48,4 +48,21 @@ class PlayerTest < Test::Unit::TestCase
 
     assert_true(look == room.description)
   end
+
+  def test_go
+    player = Player.create(:username => 'a', :str => 1, :con => 3, :dex => 10, :int => 6)
+    room = Room.create(:name => 'Some room', :description => 'A room')
+    other_room = Room.create(:name => 'Different room', :description => 'A different room')
+    dungeon = Dungeon.create(:name => 'Some Dungeon', :author => 'Me')
+    dungeon.set_first_room(room)
+    dungeon.add_room(other_room)
+    dungeon.connect_rooms(room, other_room, Direction::WEST)
+    dungeon.connect_rooms(other_room, room, Direction::EAST)
+    player.enter_dungeon(dungeon)
+
+    assert_true(player.go(Direction::EAST))
+    assert_true(player.get_current_room.name == other_room.name)
+    assert_true(player.go(Direction::WEST))
+    assert_true(player.get_current_room.name == room.name)
+  end
 end
