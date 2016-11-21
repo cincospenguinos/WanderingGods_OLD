@@ -75,14 +75,18 @@ class PlayApp < Sinatra::Base
   end
 
   post '/exits' do
-    # TODO: This
-    send_response(false, 'This still needs to be done.')
+    player = get_player
+    exits = get_player.exits
+    resp = 'Exits are '
+    exits.each {|e| resp += (e + ', ')}
+    resp = resp.reverse.sub(' ,', '.').reverse
+    send_response(true, resp)
   end
 
   post '/help' do
     if @params.size == 0
       resp = '<strong>look [object]</strong> - look at the room or an object<br/>'\
-      '<strong>exits</strong> - displays the current exists you may take'\
+      '<strong>exits</strong> - displays the current exists you may take<br/>'\
       '<strong>help [command]</strong> - display this menu or see more information about a command<br/>'
 
       send_response(true, resp)

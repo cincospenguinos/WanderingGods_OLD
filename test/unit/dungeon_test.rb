@@ -108,4 +108,32 @@ class DungeonTest < Test::Unit::TestCase
     assert_true(dungeon.has_room(room1))
     assert_false(dungeon.has_connection(room1, room2))
   end
+
+  def test_exits
+    dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
+    room1 = Room.create(:name => 'Room1', :description => 'Room 1')
+    room2 = Room.create(:name => 'Room2', :description => 'Room 2')
+    room3 = Room.create(:name => 'Room3', :description => 'Room 3')
+
+    dungeon.add_room(room1)
+    dungeon.add_room(room2)
+    dungeon.add_room(room3)
+
+    dungeon.connect_rooms(room1, room2, Direction::SOUTH)
+    dungeon.connect_rooms(room1, room3, Direction::SOUTH_EAST)
+    dungeon.connect_rooms(room2, room1, Direction::NORTH)
+    dungeon.connect_rooms(room2, room3, Direction::EAST)
+    dungeon.connect_rooms(room3, room2, Direction::WEST)
+
+    exits = dungeon.exits_strings(room1)
+    assert_true(exits.include?('south'))
+    assert_true(exits.include?('southeast'))
+
+    exits = dungeon.exits_strings(room2)
+    assert_true(exits.include?('north'))
+    assert_true(exits.include?('east'))
+
+    exits = dungeon.exits_strings(room3)
+    assert_true(exits.include?('west'))
+  end
 end

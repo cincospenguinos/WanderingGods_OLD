@@ -64,6 +64,10 @@ class Player
     end
   end
 
+  def exits
+    self.dungeon.exits_strings(self.room)
+  end
+
   ## STATS
 
   def physical_to_hit

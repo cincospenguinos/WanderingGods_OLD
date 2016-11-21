@@ -13,39 +13,25 @@ class Dungeon
   property :dungeon_graph, Json, :default => {}
   property :first_room_id, Integer
 
-  # TODO: Dungeons with rooms with the same name? Switch to IDs instead?
-  # has n, :rooms # TODO: Maybe just JSON property instead?
-
   belongs_to :player, :required => false
 
   def add_room(room)
-    # room.update(:dungeon => self)
-    # self.connections[room.name] = {}
-    self.dungeon_graph[room.id] = {}
+    self.dungeon_graph[room.id.to_s] = {}
   end
 
   def has_room(room)
-    # Room.first(:name => room_name, :dungeon => self) != nil
-    self.dungeon_graph[room.id] != nil
+    # puts "Graph: #{self.dungeon_graph}\tRoom ID: #{room.id}\tExists: #{self.dungeon_graph[room.id.to_s]}"
+    self.dungeon_graph[room.id.to_s] != nil
   end
 
   def remove_room(room)
-    # room = Room.first(:name => room_name, :dungeon => self)
-    #
-    # if room
-    #   room.update(:dungeon => nil)
-    #
-    #   # TODO: Manage all of the connections
-    #
-    #   self.connections[room.name] = nil
-    # end
-    self.dungeon_graph[room.id] = nil if self.dungeon_graph[room.id]
+    self.dungeon_graph[room.id.to_s] = nil if has_room(room)
 
     self.dungeon_graph.each do |k, v|
       next unless v
 
       v.each do |direction, r|
-        v[direction] = nil if r == room.id
+        v[direction] = nil if r.to_s == room.id.to_s
       end
     end
   end
@@ -65,32 +51,48 @@ class Dungeon
     return unless has_room(origin) && has_room(destination)
     return unless Direction.is_direction?(direction)
 
-    self.dungeon_graph[origin.id][direction] = destination.id
+    self.dungeon_graph[origin.id.to_s][direction] = destination.id
     save
   end
 
   def has_exit_in_direction(room, direction)
     return false unless has_room(room)
-    self.dungeon_graph[room.id][direction] != nil
+    self.dungeon_graph[room.id.to_s][direction] != nil
   end
 
   def has_connection(room1, room2)
     return false unless has_room(room1) && has_room(room2)
 
-    self.dungeon_graph[room1.id].each do |direction, id|
-      return true if room2.id == id
+    self.dungeon_graph[room1.id.to_s].each do |direction, id|
+      return true if room2.id.to_s == id.to_s
     end
 
-    self.dungeon_graph[room2.id].each do |direction, id|
-      return true if room1.id == id
+    self.dungeon_graph[room2.id.to_s].each do |direction, id|
+      return true if room1.id.to_s == id.to_s
     end
 
     false
   end
 
-  # TODO: Rename this
   def go(origin, direction)
     return nil unless has_exit_in_direction(origin, direction)
-    Room.first(:id => self.dungeon_graph[origin.id][direction])
+    Room.first(:id => self.dungeon_graph[origin.id.to_s][direction])
+  end
+
+  def exits_strings(room)
+    exits = []
+    # puts has_room(room)
+    return exits unless has_room(room)
+    self.dungeon_graph[room.id.to_s].each do |k|
+      k.each do |i|
+        exits += [Direction.to_s(i.to_i)]
+      end
+    end
+
+    exits.each do |i|
+      raise RuntimeError, 'An exit returned as nil' if i.nil?
+    end
+
+    exits
   end
 end

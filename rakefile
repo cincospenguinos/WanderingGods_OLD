@@ -1,3 +1,5 @@
+require 'rspec/core/rake_task'
+
 
 # Test task
 task :test => [:unit, :spec]
@@ -6,8 +8,9 @@ task :unit do
   Dir[File.dirname(File.absolute_path(__FILE__)) + '/**/*_test.rb'].each {|file| require file }
 end
 
-task :spec => [:setup] do
-  # TODO: Spec tests
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = 'test/spec/*_spec.rb'
+  t.verbose = true
 end
 
 task :setup do

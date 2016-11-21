@@ -22,4 +22,27 @@ module Direction
 
     false
   end
+
+  def self.to_s(dir)
+    case dir
+      when NORTH
+        'north'
+      when NORTH_EAST
+        'northeast'
+      when EAST
+        'east'
+      when SOUTH_EAST
+        'southeast'
+      when SOUTH
+        'south'
+      when SOUTH_WEST
+        'south'
+      when WEST
+        'west'
+      when NORTH_WEST
+        'northwest'
+      else
+        nil
+    end
+  end
 end
