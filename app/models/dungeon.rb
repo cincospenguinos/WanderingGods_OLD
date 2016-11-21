@@ -11,7 +11,7 @@ class Dungeon
   property :author, String, :required => true
 
   property :connections, Json, :default => {}
-  property :first_room, String # TODO: Convert this into an ID instead, as there may be multiple rooms with the same name
+  property :first_room_id, Integer
 
   # TODO: Dungeons with rooms with the same name? Switch to IDs instead?
   has n, :rooms # TODO: Maybe just JSON property instead?
@@ -40,13 +40,13 @@ class Dungeon
   end
 
   def get_first_room
-    raise RuntimeError, 'There is no first room for this dungeon' unless self.first_room
-    Room.first(:name => self.first_room, :dungeon => self)
+    raise RuntimeError, 'There is no first room for this dungeon' unless self.first_room_id
+    Room.first(:id => self.first_room_id, :dungeon => self)
   end
 
   def set_first_room(room)
     save if dirty?
-    update(:first_room => room.name)
+    update(:first_room_id => room.id)
     add_room(room) unless has_room(room.name)
   end
 
