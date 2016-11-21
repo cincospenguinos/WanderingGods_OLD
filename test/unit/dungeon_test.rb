@@ -28,7 +28,7 @@ class DungeonTest < Test::Unit::TestCase
     dungeon = Dungeon.create(:name => 'A Dungeon', :author => 'Me')
     room = Room.create(:name => 'Some Room', :description => 'Some room.')
     dungeon.add_room(room)
-    assert_true(dungeon.has_room(room.name))
+    assert_true(dungeon.has_room(room))
   end
 
   def test_connect_rooms
@@ -39,8 +39,8 @@ class DungeonTest < Test::Unit::TestCase
     dungeon.add_room(room1)
     dungeon.add_room(room2)
 
-    assert_true(dungeon.has_room(room1.name))
-    assert_true(dungeon.has_room(room2.name))
+    assert_true(dungeon.has_room(room1))
+    assert_true(dungeon.has_room(room2))
 
     dungeon.connect_rooms(room1, room2, Direction::EAST)
     assert_true(dungeon.has_connection(room1, room2))
@@ -74,9 +74,9 @@ class DungeonTest < Test::Unit::TestCase
     room1 = Room.create(:name => 'Room1', :description => 'Room 1')
 
     dungeon.add_room(room1)
-    dungeon.remove_room(room1.name)
+    dungeon.remove_room(room1)
 
-    assert_false(dungeon.has_room(room1.name))
+    assert_false(dungeon.has_room(room1))
   end
 
   def test_remove_connected_room1
@@ -87,10 +87,10 @@ class DungeonTest < Test::Unit::TestCase
     dungeon.add_room(room1)
     dungeon.add_room(room2)
     dungeon.connect_rooms(room1, room2, Direction::UP)
-    dungeon.remove_room(room1.name)
+    dungeon.remove_room(room1)
 
-    assert_false(dungeon.has_room(room1.name))
-    assert_true(dungeon.has_room(room2.name))
+    assert_false(dungeon.has_room(room1))
+    assert_true(dungeon.has_room(room2))
     assert_false(dungeon.has_connection(room1, room2))
   end
 
@@ -102,10 +102,10 @@ class DungeonTest < Test::Unit::TestCase
     dungeon.add_room(room1)
     dungeon.add_room(room2)
     dungeon.connect_rooms(room1, room2, Direction::SOUTH_EAST)
-    dungeon.remove_room(room2.name)
+    dungeon.remove_room(room2)
 
-    assert_false(dungeon.has_room(room2.name))
-    assert_true(dungeon.has_room(room1.name))
+    assert_false(dungeon.has_room(room2))
+    assert_true(dungeon.has_room(room1))
     assert_false(dungeon.has_connection(room1, room2))
   end
 end

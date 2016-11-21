@@ -10,7 +10,7 @@ class Room
 
   has n, :items # TODO: Perhaps consider making these just JSON elements?
 
-  belongs_to :dungeon, :required => false
+  # belongs_to :dungeon, :required => false
   belongs_to :player, :required => false
 
 
