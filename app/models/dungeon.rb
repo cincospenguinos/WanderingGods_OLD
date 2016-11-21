@@ -89,8 +89,8 @@ class Dungeon
   end
 
   # TODO: Rename this
-  def get_room_through_direction(room, direction)
-    return nil unless has_exit_in_direction(room, direction)
-    Room.first(:name => self.dungeon_graph[room.id][direction])
+  def go(origin, direction)
+    return nil unless has_exit_in_direction(origin, direction)
+    Room.first(:id => self.dungeon_graph[origin.id][direction])
   end
 end

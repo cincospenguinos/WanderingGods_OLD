@@ -60,9 +60,9 @@ class PlayerTest < Test::Unit::TestCase
     dungeon.connect_rooms(other_room, room, Direction::EAST)
     player.enter_dungeon(dungeon)
 
-    assert_true(player.go(Direction::EAST))
-    assert_true(player.get_current_room.name == other_room.name)
     assert_true(player.go(Direction::WEST))
+    assert_true(player.get_current_room.name == other_room.name)
+    assert_true(player.go(Direction::EAST))
     assert_true(player.get_current_room.name == room.name)
   end
 end

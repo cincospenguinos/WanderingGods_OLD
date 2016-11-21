@@ -51,7 +51,7 @@ class Player
 
   def go(direction)
     if Direction.is_direction?(direction)
-      room = self.dungeon.get_room_through_direction(get_current_room, direction)
+      room = self.dungeon.go(get_current_room, direction)
 
       if room
         update(:room => room)
